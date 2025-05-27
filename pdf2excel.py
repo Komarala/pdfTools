@@ -1,11 +1,11 @@
 import tabula
 import pandas as pd
 
-ADD_NEW_SHEET_FOR_EACH_PAGE_IN_PDF = False
+ADD_NEW_SHEET_FOR_EACH_PAGE_IN_PDF = False #Set to True if you want each page of the PDF to be in a separate sheet in the Excel file
 
 def pdf_to_excel(pdf_file_path, excel_file_path):
     # Read PDF file
-    tables = tabula.read_pdf(pdf_file_path, pages="1-21", multiple_tables=True)
+    tables = tabula.read_pdf(pdf_file_path, pages="all", multiple_tables=True)
 
     if( ADD_NEW_SHEET_FOR_EACH_PAGE_IN_PDF ):
         # Write each table to a separate sheet in the Excel file
@@ -16,7 +16,7 @@ def pdf_to_excel(pdf_file_path, excel_file_path):
         # Concatenate all tables into a single DataFrame
         combined_table = pd.concat(tables, ignore_index=True)
         # Write the combined table to a single sheet in the Excel file
-        combined_table.to_excel(excel_file_path, sheet_name='Combined', index=False)
+        combined_table.to_excel(excel_file_path, sheet_name='CombinedSheet', index=False)
 
 
-pdf_to_excel('./list-of-candidates-2025_26.pdf', './pdf_to_excel_file.xlsx')
+pdf_to_excel('./example.pdf', './yourExcelFileName.xlsx')
